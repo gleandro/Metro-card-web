@@ -1,16 +1,45 @@
-import {Dispatch, SetStateAction, useState} from "react";
+import {ChangeEvent, Dispatch, SetStateAction, useState} from "react";
+import {useForm} from "@/util/useForm";
+import {loginUser} from "@/services/user.services";
+import {useRouter} from "next/navigation";
+import {addSession} from "@/services/session";
+
+const userInstance: UserEntity = {
+    id: 0,
+    userCode: "",
+    name: "",
+    lastName: "",
+    address: "",
+    dateOfBirth: "",
+    dni: "",
+    email: "",
+    password: ""
+}
 
 export default function PageLogin({setViewLogin}: { setViewLogin: Dispatch<SetStateAction<boolean>> }) {
+
+
     const [formValidated, setFormValidated] = useState(false);
+    const [formValues, handleInputChange, reset] = useForm(userInstance)
 
-    // valores de login
-    const [dni, setDni] = useState("");
-    const [password, setPassword] = useState("");
+    const router = useRouter();
 
-    const sendForm = (event: any) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => handleInputChange(event)
+
+    const sendForm = async (event: any) => {
         event.preventDefault()
-        //
-        setFormValidated(true)
+        try {
+            loginUser(formValues).then((data: ApiResponse) => {
+                if (data.success) {
+                    addSession('userSession', data.data)
+                    router.push("/")
+                } else {
+                    alert(data.message)
+                }
+            });
+        } catch (error) {
+            console.log('Error:', error);
+        }
     }
 
     return (
@@ -18,15 +47,13 @@ export default function PageLogin({setViewLogin}: { setViewLogin: Dispatch<SetSt
             <h2 className="text-center mb-3">Iniciar sesión</h2>
             <div className="mb-3">
                 <label htmlFor="dni" className="form-label">DNI</label>
-                <input type="text" className="form-control" id="dni" value={dni}
-                       onChange={(event) => setDni(event.target.value)}
-                       placeholder="Ingrese su documento de identidad" required/>
+                <input name="dni" type="text" className="form-control" value={formValues.dni}
+                       onChange={handleChange} placeholder="Ingrese su documento de identidad" required/>
             </div>
             <div className="mb-3">
                 <label htmlFor="password" className="form-label">Contraseña</label>
-                <input type="password" className="form-control" id="password" value={password}
-                       onChange={(event) => setPassword(event.target.value)}
-                       placeholder="Ingrese su contraseña" required/>
+                <input name="password" type="password" className="form-control" value={formValues.password}
+                       onChange={handleChange} placeholder="Ingrese su contraseña" required/>
             </div>
             <div className="mb-3 d-flex justify-content-center">
                 <button type="submit" className="btn btn-primary col-8">Iniciar sesión</button>
