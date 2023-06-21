@@ -1,9 +1,18 @@
+"use client"
 import "bootstrap/dist/css/bootstrap.css"
+import "bootstrap/dist/js/bootstrap.bundle.min"
 import {existSession} from "@/services/session";
+import {redirect} from "next/navigation";
 
 export default function Home() {
 
-    existSession('userSession') ? console.log("Existe sesión") : console.log("No existe sesión");
+    if (!existSession('userSession')) {
+        redirect("/")
+    }
 
-    return "Hello World!"
+    return (
+        <div className="container">
+            Page Home
+        </div>
+    )
 }

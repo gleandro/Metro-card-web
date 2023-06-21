@@ -1,4 +1,4 @@
-import {ChangeEvent, Dispatch, SetStateAction, useState} from "react";
+import {ChangeEvent, Dispatch, SetStateAction} from "react";
 import {useForm} from "@/util/useForm";
 import {addUser} from "@/services/user.services";
 
@@ -14,9 +14,8 @@ const userInstance: UserEntity = {
     password: ""
 }
 
-export default function PageLogin({setViewLogin}: { setViewLogin: Dispatch<SetStateAction<boolean>> }) {
-    const [formValidated, setFormValidated] = useState(false);
-    const [formValues, handleInputChange, reset] = useForm(userInstance)
+export default function PageRegister({setViewLogin}: { setViewLogin: Dispatch<SetStateAction<boolean>> }) {
+    const [formValues, handleInputChange] = useForm(userInstance)
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => handleInputChange(event)
 
@@ -24,7 +23,9 @@ export default function PageLogin({setViewLogin}: { setViewLogin: Dispatch<SetSt
         event.preventDefault()
         try {
             addUser(formValues).then((data) => {
-                console.log(data);
+                if (data.success) {
+                    setViewLogin(oldState => !oldState)
+                }
             });
         } catch (error) {
             console.log('Error:', error);
@@ -32,50 +33,33 @@ export default function PageLogin({setViewLogin}: { setViewLogin: Dispatch<SetSt
     }
 
     return (
-        <form onSubmit={sendForm} className={formValidated ? 'was-validated' : ''} noValidate>
+        <form onSubmit={sendForm}>
             <h2 className="text-center mb-3">Crear Cuenta</h2>
-            <div className="row">
-                <div className="mb-3 col-6">
-                    <label htmlFor="name" className="form-label">Nombre</label>
-                    <input name="name" type="text" className="form-control" value={formValues.name}
-                           onChange={handleChange} placeholder="Ingrese su nombre" required/>
-                    <div className="invalid-feedback">
-                        Por favor, ingrese su nombre.
-                    </div>
-                </div>
-                <div className="mb-3 col-6">
-                    <label htmlFor="lastName" className="form-label">Apellido</label>
-                    <input name="lastName" type="text" className="form-control" value={formValues.lastName}
-                           onChange={handleChange} placeholder="Ingrese su apellido" required/>
-                    <div className="invalid-feedback">
-                        Por favor, ingrese su apellido.
-                    </div>
-                </div>
-                <div className="mb-3 col-6">
-                    <label htmlFor="dniNew" className="form-label">DNI</label>
-                    <input name="dni" type="text" className="form-control" value={formValues.dni}
-                           onChange={handleChange} placeholder="Ingrese su documento de identidad" required/>
-                    <div className="invalid-feedback">
-                        Por favor, ingrese su dni.
-                    </div>
-                </div>
-                <div className="mb-3 col-6">
-                    <label htmlFor="email" className="form-label">Correo electrónico</label>
-                    <input name="email" type="email" className="form-control" value={formValues.email}
-                           onChange={handleChange} placeholder="Ingrese su correo electrónico" required/>
-                    <div className="invalid-feedback">
-                        Por favor, ingrese su email correctamente.
-                    </div>
-                </div>
-                <div className="mb-3 col-6">
-                    <label htmlFor="password" className="form-label">Contraseña</label>
-                    <input name="password" type="password" className="form-control" id="password"
-                           value={formValues.password} onChange={handleChange}
-                           placeholder="Ingrese su contraseña" required/>
-                    <div className="invalid-feedback">
-                        Por favor, ingrese su contraseña.
-                    </div>
-                </div>
+            <div className="form-floating">
+                <input name="name" type="text" className="form-control" value={formValues.name}
+                       onChange={handleChange} placeholder="Ingrese su nombre" required/>
+                <label htmlFor="name" className="form-label">Nombre</label>
+            </div>
+            <div className="form-floating">
+                <input name="lastName" type="text" className="form-control" value={formValues.lastName}
+                       onChange={handleChange} placeholder="Ingrese su apellido" required/>
+                <label htmlFor="lastName" className="form-label">Apellido</label>
+            </div>
+            <div className="form-floating">
+                <input name="dni" type="text" className="form-control" value={formValues.dni}
+                       onChange={handleChange} placeholder="Ingrese su documento de identidad" required/>
+                <label htmlFor="dniNew" className="form-label">DNI</label>
+            </div>
+            <div className="form-floating">
+                <input name="email" type="email" className="form-control" value={formValues.email}
+                       onChange={handleChange} placeholder="Ingrese su correo electrónico" required/>
+                <label htmlFor="email" className="form-label">Correo electrónico</label>
+            </div>
+            <div className="form-floating">
+                <input name="password" type="password" className="form-control" id="password"
+                       value={formValues.password} onChange={handleChange}
+                       placeholder="Ingrese su contraseña" required/>
+                <label htmlFor="password" className="form-label">Contraseña</label>
             </div>
             <div className="mb-3 d-flex justify-content-center">
                 <button type="submit" className="btn btn-primary col-8">Crear cuenta</button>
