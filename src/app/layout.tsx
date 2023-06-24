@@ -4,6 +4,7 @@ import {usePathname} from "next/navigation";
 import NavComponent from "@/components/navComponent";
 import "./page.css"
 import "../../public/color-modes"
+import Theme from "@/components/theme";
 
 const metadata = {
     title: 'MetroCard',
@@ -27,6 +28,7 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
             currentPage !== '/login' && <NavComponent/>
         }
         {children}
+        <Theme/>
         </body>
         </html>
     )
