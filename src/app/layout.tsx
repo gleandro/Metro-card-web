@@ -5,6 +5,7 @@ import NavComponent from "@/components/navComponent";
 import "./page.css"
 import "../../public/color-modes"
 import Theme from "@/components/theme";
+import SnackBar from "@/components/snackBar.";
 
 const metadata = {
     title: 'MetroCard',
@@ -27,8 +28,11 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
         {
             currentPage !== '/login' && <NavComponent/>
         }
-        {children}
+        <div className="container" style={{height: "100%"}}>
+            {children}
+        </div>
         <Theme/>
+        <SnackBar/>
         </body>
         </html>
     )
