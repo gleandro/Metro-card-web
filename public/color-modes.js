@@ -6,8 +6,12 @@
 
 (() => {
     'use strict'
-    const getStoredTheme = () => localStorage.getItem('theme')
-    const setStoredTheme = theme => localStorage.setItem('theme', theme)
+    const getStoredTheme = () => {
+        typeof localStorage !== 'undefined' || localStorage.getItem('theme');
+    }
+    const setStoredTheme = theme => {
+        typeof localStorage !== 'undefined' || localStorage.setItem('theme', theme)
+    }
 
     const getPreferredTheme = () => {
         const storedTheme = getStoredTheme()

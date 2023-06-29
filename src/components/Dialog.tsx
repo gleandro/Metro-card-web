@@ -2,12 +2,13 @@ import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogT
 import * as React from "react";
 
 export interface SimpleDialogProps {
-    open: boolean;
-    selectedValue: string;
-    onClose: (value: string) => void;
+    showDialog: boolean,
+    title: string,
+    content: string,
+    handleClose: (event: any) => void
 }
 
-export default function SimpleDialog({showDialog, title, content, handleClose}) {
+export default function SimpleDialog({showDialog, title, content, handleClose}: SimpleDialogProps) {
 
     return (
         <Dialog open={showDialog} onClose={handleClose} aria-labelledby="alert-dialog-title"
