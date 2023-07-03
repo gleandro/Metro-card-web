@@ -1,0 +1,7 @@
+<div class="form-signin w-100 m-auto" *ngIf="viewLogin">
+  <app-login-sing-in (changeViewLogin)="onChangeViewLogin($event)"/>
+</div>
+
+<div class="form-register w-100 m-auto" *ngIf="!viewLogin">
+  <app-login-register (changeViewLogin)="onChangeViewLogin($event)"/>
+</div>

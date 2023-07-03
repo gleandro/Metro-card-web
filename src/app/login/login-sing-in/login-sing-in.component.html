@@ -1,0 +1,20 @@
+<form (submit)="submitForm()">
+  <img class="mb-4" src="/assets/images/bootstrap-logo.svg" alt="" width="72" height="57">
+  <h1 class="h3 mb-3 fw-normal">Iniciar sesión</h1>
+  <div class="form-floating">
+    <input name="dni" type="text" class="form-control" placeholder="Ingrese su documento de identidad"
+           [(ngModel)]="user.dni" required/>
+    <label class="form-label">DNI</label>
+  </div>
+  <div class="form-floating">
+    <input name="password" type="password" class="form-control" placeholder="Ingrese su contraseña"
+           [(ngModel)]="user.password" required/>
+    <label class="form-label">Contraseña</label>
+  </div>
+  <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+  <div class="text-center mt-3">
+    <p>Si no tienes cuenta <a role="button" class="blue" (click)="changeView()">click aquí</a>
+    </p>
+  </div>
+  <p class="mt-5 mb-3 text-body-secondary">&copy; Giancarlo Leandro</p>
+</form>

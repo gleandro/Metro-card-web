@@ -1,0 +1,80 @@
+<div class="container">
+  <mat-form-field>
+    <mat-label>Favorite food</mat-label>
+    <mat-select name="accountCode" aria-label="Floating label select example"
+                [(ngModel)]="rechargeAccount.accountCode" matNativeControl required>
+      <mat-option *ngFor="let item of accounts" [value]="item.accountCode">
+        {{item.accountCode}} - {{item.accountNumber}} - {{item.accountDefault ? "P" : "S"}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <form (submit)="submitForm()">
+    <h2 class="text-center mb-3">Recarga de Saldo</h2>
+    <div class="row">
+      <div class="col-md">
+        <div class="form-floating">
+          <input name="amount" type="text" class="form-control" [(ngModel)]="rechargeAccount.amount" required/>
+          <label class="form-label">Monto</label>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="form-floating">
+          <select name="accountCode" class="form-select" aria-label="Floating label select example"
+                  [(ngModel)]="rechargeAccount.accountCode" matNativeControl required>
+            <option *ngFor="let item of accounts" [value]="item.accountCode">
+              {{item.accountCode}} - {{item.accountNumber}} - {{item.accountDefault ? "P" : "S"}}
+            </option>
+          </select>
+          <label class="form-label">Cuenta</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center mt-3 mb-3">
+      <button type="submit" class="btn btn-primary col-2">Recargar Saldo</button>
+    </div>
+  </form>
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="N">
+        <th mat-header-cell *matHeaderCellDef> No.</th>
+        <td mat-cell *matCellDef="let i = index"> {{i + 1}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="codigo">
+        <th mat-header-cell *matHeaderCellDef> Código</th>
+        <td mat-cell *matCellDef="let element"> {{element.accountCode}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="numero">
+        <th mat-header-cell *matHeaderCellDef> Numero de Cuenta</th>
+        <td mat-cell *matCellDef="let element"> {{element.accountNumber}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef> Fecha</th>
+        <td mat-cell *matCellDef="let element"> {{moment(element.createdDate).format('YYYY-MM-DD')}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="hora">
+        <th mat-header-cell *matHeaderCellDef> Hora</th>
+        <td mat-cell *matCellDef="let element"> {{moment(element.createdDate).format('h:mm:ss A')}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="monto">
+        <th mat-header-cell *matHeaderCellDef> Monto S/</th>
+        <td mat-cell *matCellDef="let element" class="text-success fw-bold"> S/ {{element.amount.toFixed(2)}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No existen registros</td>
+      </tr>
+
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons
+                   aria-label="Select page of users"></mat-paginator>
+  </div>
+
+</div>

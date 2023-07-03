@@ -1,0 +1,50 @@
+<div class="container">
+  <h2> Mis Cuentas </h2>
+  <div class="alert alert-warning mb-0" role="alert" *ngIf="accounts.length === 0"> No hay cuentas disponibles.</div>
+
+  <div class="d-inline-flex" style="width: inherit; overflow-x: scroll" *ngIf="accounts.length !== 0">
+    <div class="card me-3" style="min-width: 250px;cursor: pointer" *ngFor="let item of accounts"
+         (click)="detailAccount(item.accountCode || '')">
+      <div class="card-body">
+        <p class="card-text">{{item.accountDefault ? "Tarjeta por Defecto" : "Tarjeta Secundaria"}}
+          <b class="text-success"> {{item.accountCode}}</b></p>
+        <h4 class="card-title">{{formatCardNumber(item.accountNumber || "")}}</h4>
+        <h5 class="card-subtitle mb-2 text-muted">Saldo {{item.balance}}</h5>
+      </div>
+    </div>
+  </div>
+  <div class="col-2 align-items-center d-flex text-warning mt-3">
+    <button mat-fab color="primary" (click)="addAccount()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="mt-3" *ngIf="rechargeAccounts.length === 0">Selecciona una cuenta para ver el historial de recargas</div>
+
+<div class="container" *ngIf="rechargeAccounts.length !== 0">
+  <table class="table caption-top">
+    <caption>Lista de Recargas</caption>
+    <thead>
+    <tr>
+      <th class="text-center" scope="col">#</th>
+      <th class="text-center" scope="col">Código</th>
+      <th class="text-center" scope="col">Número de Cuenta</th>
+      <th class="text-center" scope="col">Fecha</th>
+      <th class="text-center" scope="col">Hora</th>
+      <th class="text-center" scope="col">Monto S/</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let item of rechargeAccounts; index as i">
+      <th class="text-center" scope="row">{{i + 1}}</th>
+      <td class="text-center">{{item.accountCode}}</td>
+      <td class="text-center">{{item.accountNumber}}</td>
+      <td class="text-center">{{moment(item.createdDate).format('YYYY-MM-DD')}}</td>
+      <td class="text-center">{{moment(item.createdDate).format('h:mm:ss A')}}</td>
+      <td class="text-center text-success">S/ {{item.amount?.toFixed(2)}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
