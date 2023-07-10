@@ -3,47 +3,38 @@
     <h2 class="text-center mb-3">Transferencia de Saldo</h2>
     <div class="row">
       <div class="col-md">
-        <div class="form-floating">
-          <input name="amount" type="text" class="form-control" [(ngModel)]="rechargeAccount.amount" required/>
-          <label class="form-label">Monto</label>
-        </div>
-      </div>
-      <div class="col-md">
-        <div class="form-floating">
-          <select name="accountCode" class="form-select" aria-label="Floating label select example"
-                  [(ngModel)]="rechargeAccount.accountCode" matNativeControl required>
-            <option *ngFor="let item of accounts" [value]="item.accountCode">
+        <mat-form-field class="w-100">
+          <mat-label>Cuenta</mat-label>
+          <mat-select [(ngModel)]="transfer.accountCodeFrom" name="accountCodeFrom">
+            <mat-option *ngFor="let item of accounts" [value]="item.accountCode">
               {{item.accountCode}} - {{item.accountNumber}} - {{item.accountDefault ? "P" : "S"}}
-            </option>
-          </select>
-          <label class="form-label">Cuenta</label>
-        </div>
-      </div>
-    </div>
-    <div class="row mt-3">
-      <div class="col-md">
-        <div class="form-floating">
-          <input name="amount" type="text" class="form-control" [(ngModel)]="rechargeAccount.amount" required/>
-          <label class="form-label">Número de cuenta</label>
-        </div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
       <div class="col-md">
-        <div class="form-floating">
-          <input name="amount" type="text" class="form-control" disabled/>
-          <label class="form-label">Nombre</label>
-        </div>
-      </div>
-      <div class="col-md">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Apellido</mat-label>
-          <input matInput>
-          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Cuenta Destino</mat-label>
+          <input matInput [(ngModel)]="transfer.accountCodeTo" name="accountCodeTo">
         </mat-form-field>
       </div>
     </div>
-
+    <div class="row">
+      <div class="col-md-2">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Monto S/</mat-label>
+          <input matInput [(ngModel)]="transfer.amount" name="amount">
+        </mat-form-field>
+      </div>
+      <div class="col-md-10">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Comentario</mat-label>
+          <input matInput [(ngModel)]="transfer.comment" name="comment">
+        </mat-form-field>
+      </div>
+    </div>
     <div class="d-flex justify-content-center mt-3 mb-3">
-      <button type="submit" class="btn btn-primary col-2">Recargar Saldo</button>
+      <button type="submit" class="btn btn-primary col-2">Transferir Saldo</button>
     </div>
   </form>
   <div class="mat-elevation-z8">
@@ -53,14 +44,19 @@
         <td mat-cell *matCellDef="let i = index"> {{i + 1}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="codigo">
-        <th mat-header-cell *matHeaderCellDef> Código</th>
-        <td mat-cell *matCellDef="let element"> {{element.accountCode}} </td>
+      <ng-container matColumnDef="accountFrom">
+        <th mat-header-cell *matHeaderCellDef> Cuenta Origen</th>
+        <td mat-cell *matCellDef="let element"> {{element.accountNumberFrom}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="numero">
-        <th mat-header-cell *matHeaderCellDef> Numero de Cuenta</th>
-        <td mat-cell *matCellDef="let element"> {{element.accountNumber}} </td>
+      <ng-container matColumnDef="accountTo">
+        <th mat-header-cell *matHeaderCellDef> Cuenta Destino</th>
+        <td mat-cell *matCellDef="let element"> {{element.accountNumberTo}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="comment">
+        <th mat-header-cell *matHeaderCellDef> Comentario</th>
+        <td mat-cell *matCellDef="let element"> {{element.comment}} </td>
       </ng-container>
 
       <ng-container matColumnDef="fecha">

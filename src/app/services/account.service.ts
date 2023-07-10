@@ -5,6 +5,7 @@ import {UserEntity} from "../models/userEntity.model";
 import {RechargeAccountEntity} from "../models/rechargeAccountEntitty";
 import {Observable} from "rxjs";
 import {ApiResponse} from "../models/apiResponse";
+import {TransferEntity} from "../models/transferEntity";
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,21 @@ export class AccountService {
   addRechargeAccount(rechargeAccount: RechargeAccountEntity) {
     rechargeAccount.userCode = this.user.userCode;
     return this.http.post(environment.API_BASE_URL_RECHARGE_ACCOUNT, rechargeAccount);
+  }
+
+  // Transfer Service
+
+  getTrasnfers(filter: string){
+    let params = {};
+    if (filter !== "") {
+      params = {filter: filter};
+    }
+    return this.http.get(environment.API_BASE_URL_TRANSFER, {params: params});
+  }
+
+  addTransfer(transfer: TransferEntity) {
+    transfer.userCode = this.user.userCode;
+    return this.http.post(environment.API_BASE_URL_TRANSFER, transfer);
   }
 
 }
