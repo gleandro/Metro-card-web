@@ -10,6 +10,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSelectModule} from "@angular/material/select";
+import {MatInputModule} from "@angular/material/input";
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {MatSelectModule} from "@angular/material/select";
     FormsModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSelectModule
+    MatSelectModule,
+    MatInputModule
   ]
 })
 export class HomeModule {
