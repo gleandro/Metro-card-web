@@ -20,7 +20,6 @@ export class TransferComponent implements OnInit {
   // Table params
   displayedColumns: string[] = ['N', 'accountFrom', 'accountTo', 'comment', 'fecha', 'hora', 'monto'];
   dataSource!: MatTableDataSource<TransferEntity>;
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private accountService: AccountService) {
@@ -49,6 +48,10 @@ export class TransferComponent implements OnInit {
         this.dataSource.data = this.dataSource.data.slice();
       });
     });
+  }
+
+  getClass(data: TransferEntity) {
+    return this.accounts.some(x => x.accountCode == data.accountCodeTo) ? 'text-primary' : 'text-danger';
   }
 
   protected readonly event = event;

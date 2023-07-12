@@ -1,11 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AccountService} from "../../services/account.service";
 import {AccountEntity} from "../../models/accountEntity";
 import {formatCardNumber} from "../../util/util";
-import {RechargeAccountEntity} from "../../models/rechargeAccountEntitty";
 import * as moment from 'moment';
 import Swal from 'sweetalert2';
 import {ApiResponse} from "../../models/apiResponse";
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
+import {TransferEntity} from "../../models/transferEntity";
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +16,12 @@ import {ApiResponse} from "../../models/apiResponse";
 })
 export class DashboardComponent implements OnInit {
   accounts: AccountEntity[] = [];
-  rechargeAccounts: RechargeAccountEntity[] = [];
+  transfers: TransferEntity[] = [];
+
+  // Table params
+  displayedColumns: string[] = ['N', 'tipo', 'numeroFrom', 'numeroTo', 'fecha', 'hora', 'monto'];
+  dataSource!: MatTableDataSource<TransferEntity>;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private accountService: AccountService) {
   }
@@ -23,13 +30,30 @@ export class DashboardComponent implements OnInit {
     this.accountService.getAccounts().subscribe((data: any) => {
       this.accounts = data;
     });
+    this.dataSource = new MatTableDataSource<TransferEntity>(this.transfers);
+    this.dataSource.paginator = this.paginator;
   }
 
   detailAccount(accountCode: string) {
-    this.accountService.getRechargeAccountByCode(accountCode).subscribe((data: any) => {
-      console.log(data);
-      this.rechargeAccounts = data;
+    this.accountService.getAllTransaction(accountCode).subscribe((data: any) => {
+      data.sort((a: any, b: any) => {
+        return new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime();
+      });
+      this.dataSource = new MatTableDataSource<TransferEntity>(data);
+      this.dataSource.paginator = this.paginator;
     });
+  }
+
+  getClass(transfer: TransferEntity) {
+    if (transfer.typeTransaction === 'Recharge') return 'text-success';
+
+    let accountFrom = this.accounts.some(x => x.accountCode == transfer.accountCodeFrom);
+    let accountTo = this.accounts.some(x => x.accountCode == transfer.accountCodeTo);
+
+    if (accountFrom && accountTo) return 'text-primary';
+    if (accountFrom) return 'text-danger';
+    if (accountTo) return 'text-success';
+    return 'text-info';
   }
 
   addAccount() {

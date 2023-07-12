@@ -39,6 +39,10 @@ export class RechargeComponent implements OnInit {
   }
 
   submitForm() {
+    if (this.rechargeAccount.amount == 0) {
+      Swal.fire('El monto no puede ser 0!', "", 'warning');
+      return;
+    }
     this.accountService.addRechargeAccount(this.rechargeAccount).subscribe((resp: any) => {
       Swal.fire('Recarga exitosa!', resp.message, 'success').then(() => {
         this.rechargeAccount.amount = 0

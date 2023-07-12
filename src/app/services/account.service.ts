@@ -45,7 +45,12 @@ export class AccountService {
 
   // Transfer Service
 
-  getTrasnfers(filter: string){
+  getAllTransaction(filter: string) {
+    let params = {filter: filter};
+    return this.http.get(environment.API_BASE_URL_ACCOUNT + "/transactions", {params: params});
+  }
+
+  getTrasnfers(filter: string) {
     let params = {};
     if (filter !== "") {
       params = {filter: filter};

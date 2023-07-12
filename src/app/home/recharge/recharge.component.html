@@ -1,32 +1,25 @@
 <div class="container">
-  <mat-form-field>
-    <mat-label>Favorite food</mat-label>
-    <mat-select name="accountCode" aria-label="Floating label select example"
-                [(ngModel)]="rechargeAccount.accountCode" matNativeControl required>
-      <mat-option *ngFor="let item of accounts" [value]="item.accountCode">
-        {{item.accountCode}} - {{item.accountNumber}} - {{item.accountDefault ? "P" : "S"}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
   <form (submit)="submitForm()">
     <h2 class="text-center mb-3">Recarga de Saldo</h2>
     <div class="row">
       <div class="col-md">
-        <div class="form-floating">
-          <input name="amount" type="text" class="form-control" [(ngModel)]="rechargeAccount.amount" required/>
-          <label class="form-label">Monto</label>
-        </div>
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Monto</mat-label>
+          <input matInput [(ngModel)]="rechargeAccount.amount" class="example-right-align" name="amount" required
+                 type="number">
+          <span matTextPrefix>S/&nbsp;</span>
+        </mat-form-field>
       </div>
       <div class="col-md">
-        <div class="form-floating">
-          <select name="accountCode" class="form-select" aria-label="Floating label select example"
-                  [(ngModel)]="rechargeAccount.accountCode" matNativeControl required>
-            <option *ngFor="let item of accounts" [value]="item.accountCode">
+        <mat-form-field class="w-100">
+          <mat-label>Favorite food</mat-label>
+          <mat-select name="accountCode" aria-label="Floating label select example"
+                      [(ngModel)]="rechargeAccount.accountCode" required>
+            <mat-option *ngFor="let item of accounts" [value]="item.accountCode">
               {{item.accountCode}} - {{item.accountNumber}} - {{item.accountDefault ? "P" : "S"}}
-            </option>
-          </select>
-          <label class="form-label">Cuenta</label>
-        </div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
     </div>
 
