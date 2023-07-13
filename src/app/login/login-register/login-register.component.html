@@ -2,47 +2,42 @@
   <h2 class="text-center mb-3">Crear Cuenta</h2>
   <div class="row mt-2">
     <div class="col">
-      <div class="form-floating">
-        <input name="name" type="text" class="form-control"
-               placeholder="Ingrese su nombre" [(ngModel)]="user.name" required/>
-        <label class="form-label">Nombre</label>
-      </div>
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Nombre</mat-label>
+        <input matInput [(ngModel)]="user.name" type="text" name="name" required>
+      </mat-form-field>
     </div>
     <div class="col">
-      <div class="form-floating">
-        <input name="lastName" type="text" class="form-control"
-               placeholder="Ingrese su apellido" [(ngModel)]="user.lastName" required/>
-        <label class="form-label">Apellido</label>
-      </div>
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Apellido</mat-label>
+        <input matInput [(ngModel)]="user.lastName" type="text" name="lastName" required>
+      </mat-form-field>
     </div>
   </div>
   <div class="row mt-2">
     <div class="col">
-      <div class="form-floating">
-        <input name="email" type="email" class="form-control"
-               placeholder="Ingrese su correo electrónico" [(ngModel)]="user.email" required/>
-        <label class="form-label">Correo electrónico</label>
-      </div>
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Correo electrónico</mat-label>
+        <input matInput [(ngModel)]="user.email" type="email" name="email" required>
+      </mat-form-field>
     </div>
   </div>
   <div class="row mt-2">
     <div class="col">
-      <div class="form-floating">
-        <input name="dni" type="text" class="form-control"
-               placeholder="Ingrese su documento de identidad" [(ngModel)]="user.dni" required/>
-        <label class="form-label">DNI</label>
-      </div>
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>DNI</mat-label>
+        <input matInput [(ngModel)]="user.dni" type="text" name="dni" required>
+      </mat-form-field>
     </div>
     <div class="col">
-      <div class="form-floating">
-        <input name="password" type="password" class="form-control" id="password" [(ngModel)]="user.password"
-               placeholder="Ingrese su contraseña" required/>
-        <label class="form-label">Contraseña</label>
-      </div>
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Contraseña</mat-label>
+        <input matInput [(ngModel)]="user.password" type="password" name="password" required>
+      </mat-form-field>
     </div>
   </div>
   <div class="mb-2 mt-2 d-flex justify-content-center">
-    <button type="submit" class="btn btn-primary col-8">Crear cuenta</button>
+    <button mat-raised-button class="w-100" color="primary" type="submit">Crear cuenta</button>
   </div>
   <div class="text-center">
     <p>Si ya tienes cuenta <a role="button" class="blue" (click)="changeView()">click aquí</a>

@@ -23,4 +23,9 @@ export class UserService {
     return this.http.post(url, user);
   }
 
+  resetPassword(dni: string) {
+    const params = {dni: dni};
+    return this.http.get(environment.API_BASE_URL_USER + "/reset-password", {params: params});
+  }
+
 }

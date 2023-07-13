@@ -2,6 +2,8 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {UserEntity} from "../../models/userEntity.model";
 import {UserService} from "../../services/user.service";
 import {ApiResponse} from "../../models/apiResponse";
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-login-register',
@@ -19,11 +21,12 @@ export class LoginRegisterComponent {
   }
 
   submitForm() {
-    this.userService.createUser(this.user).subscribe((data: ApiResponse) => {
-      if (data.success) {
+    this.userService.createUser(this.user).subscribe((resp: ApiResponse) => {
+      if (resp.success) {
         this.changeView();
+        Swal.fire(resp.message, "", 'success')
       } else {
-        alert(data.message);
+        Swal.fire(resp.message, "", 'error')
       }
     });
   };
