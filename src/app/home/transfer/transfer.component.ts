@@ -6,6 +6,7 @@ import {AccountService} from "../../services/account.service";
 import Swal from "sweetalert2";
 import * as moment from "moment/moment";
 import {TransferEntity} from "../../models/transferEntity";
+import {ApiResponse} from "../../models/apiResponse";
 
 @Component({
   selector: 'app-transfer',
@@ -38,16 +39,23 @@ export class TransferComponent implements OnInit {
   }
 
   submitForm() {
-    console.log(this.transfer);
-    this.accountService.addTransfer(this.transfer).subscribe((resp: any) => {
-      Swal.fire('Transferencia exitosa!', resp.message, 'success').then(() => {
-        this.transfer.amount = "0";
-        this.transfer.accountCodeTo = "";
-        this.transfer.comment = "";
-        this.dataSource.data.unshift(resp.data);
-        this.dataSource.data = this.dataSource.data.slice();
+    if (this.accounts.find(x => x.accountCode === this.transfer.accountCodeFrom)?.accountNumber === this.transfer.accountCodeTo) {
+      Swal.fire('La cuenta de origen y destino debe ser diferente', "", 'warning')
+    } else {
+      this.accountService.addTransfer(this.transfer).subscribe((resp: ApiResponse) => {
+        if (resp.success) {
+          Swal.fire('Transferencia exitosa!', resp.message, 'success').then(() => {
+            this.transfer.amount = "0";
+            this.transfer.accountCodeTo = "";
+            this.transfer.comment = "";
+            this.dataSource.data.unshift(resp.data);
+            this.dataSource.data = this.dataSource.data.slice();
+          });
+        } else {
+          Swal.fire('Transferencia fallida!', resp.message, 'error')
+        }
       });
-    });
+    }
   }
 
   getClass(data: TransferEntity) {

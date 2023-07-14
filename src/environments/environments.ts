@@ -1,6 +1,8 @@
+const localhost = 'http://localhost:8080';
+
 export const environment = {
-  API_BASE_URL_USER: 'http://localhost:8080/user',
-  API_BASE_URL_ACCOUNT: 'http://localhost:8080/account',
-  API_BASE_URL_RECHARGE_ACCOUNT: 'http://localhost:8080/recharge_account',
-  API_BASE_URL_TRANSFER: 'http://localhost:8080/transfer',
+  API_BASE_URL_USER: `${localhost}/user`,
+  API_BASE_URL_ACCOUNT: `${localhost}/account`,
+  API_BASE_URL_RECHARGE_ACCOUNT: `${localhost}/recharge_account`,
+  API_BASE_URL_TRANSFER: `${localhost}/transfer`
 }

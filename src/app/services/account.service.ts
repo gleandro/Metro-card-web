@@ -51,10 +51,7 @@ export class AccountService {
   }
 
   getTrasnfers(filter: string) {
-    let params = {};
-    if (filter !== "") {
-      params = {filter: filter};
-    }
+    const params = {filter: this.user.userCode || ""};
     return this.http.get(environment.API_BASE_URL_TRANSFER, {params: params});
   }
 
